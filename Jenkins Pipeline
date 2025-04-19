@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_HUB_REPO = 'arungc07' // <-- Replace this!
+        BACKEND_IMAGE = "${DOCKER_HUB_REPO}/project-backend:latest"
+        FRONTEND_IMAGE = "${DOCKER_HUB_REPO}/project-frontend:latest"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch:'main', url: 'https://github.com/arungc07/Project.git'
+            }
+        }
+
+        stage('Build Backend') {
+            steps {
+                dir('backend') {
+                    sh 'mvn clean install'
+                    sh 'docker build -t $BACKEND_IMAGE .'
+                }
+            }
+        }
+
+        stage('Build Frontend') {
+            steps {
+                dir('frontend') {
+                    sh 'mvn clean install'
+                    sh 'docker build -t $FRONTEND_IMAGE .'
+                }
+            }
+        }
+
+    stage('Docker Login and Push Images') {
+    steps {
+        withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+            sh '''
+                echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                docker push $BACKEND_IMAGE
+                docker push $FRONTEND_IMAGE
+            '''
+        }
+    }
+        }
+
+        stage('Run Containers') {
+            steps {
+                sh 'docker stop backend || true && docker rm backend || true'
+                sh 'docker stop frontend || true && docker rm frontend || true'
+
+                sh 'docker run -d -p 8085:8080 --name backend $BACKEND_IMAGE'
+                sh 'export BACKEND=http://135.235.156.235:8085 && docker run -d -p 8084:8080 --name frontend $FRONTEND_IMAGE'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Application deployed:"
+            echo "Frontend: http://135.235.156.235:8084"
+            echo "Backend Docs: http://135.235.156.235:8085/docs"
+        }
+        failure {
+            echo "❌ Build or deployment failed!"
+        }
+    }
+}
