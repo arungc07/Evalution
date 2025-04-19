@@ -86,9 +86,13 @@ pipeline {
 4. Will tag the image and will push to docker hub
    
 docker tag backend:latest arungc0/backend:latest
+
 docker tag frontend:latest arungc07/frontend:latest
+
 docker Push backend:latest arungc07/backend:latest
+
 docker Push frontend:latest arungc07/:frontend:latest
+
 ================================================
 
 6. Run the containers with new images
