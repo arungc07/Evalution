@@ -1,0 +1,331 @@
+Started by user arungc07
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/Evaluation_pipeline
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/Evaluation_pipeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/arungc07/Project.git # timeout=10
+Fetching upstream changes from https://github.com/arungc07/Project.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+ > git fetch --tags --force --progress -- https://github.com/arungc07/Project.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision b696e3b7c67852c3f74e6e48f71a11ab813f4bf7 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f b696e3b7c67852c3f74e6e48f71a11ab813f4bf7 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main b696e3b7c67852c3f74e6e48f71a11ab813f4bf7 # timeout=10
+Commit message: "Update Dockerfile"
+ > git rev-list --no-walk b696e3b7c67852c3f74e6e48f71a11ab813f4bf7 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Backend)
+[Pipeline] dir
+Running in /var/lib/jenkins/workspace/Evaluation_pipeline/backend
+[Pipeline] {
+[Pipeline] sh
++ mvn clean install
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------------------< [0;36madi:backend[0;1m >-----------------------------[m
+[[1;34mINFO[m] [1mBuilding backend 1.0-RELEASE[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:2.5:clean[m [1m(default-clean)[m @ [36mbackend[0;1m ---[m
+[[1;34mINFO[m] Deleting /var/lib/jenkins/workspace/Evaluation_pipeline/backend/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mbackend[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:compile[m [1m(default-compile)[m @ [36mbackend[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 6 source files to /var/lib/jenkins/workspace/Evaluation_pipeline/backend/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mbackend[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /var/lib/jenkins/workspace/Evaluation_pipeline/backend/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:testCompile[m [1m(default-testCompile)[m @ [36mbackend[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.18.1:test[m [1m(default-test)[m @ [36mbackend[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:2.5:jar[m [1m(default-jar)[m @ [36mbackend[0;1m ---[m
+[[1;34mINFO[m] Building jar: /var/lib/jenkins/workspace/Evaluation_pipeline/backend/target/backend-1.0-RELEASE.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:1.3.5.RELEASE:repackage[m [1m(default)[m @ [36mbackend[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-install-plugin:2.5.2:install[m [1m(default-install)[m @ [36mbackend[0;1m ---[m
+[[1;34mINFO[m] Installing /var/lib/jenkins/workspace/Evaluation_pipeline/backend/target/backend-1.0-RELEASE.jar to /var/lib/jenkins/.m2/repository/adi/backend/1.0-RELEASE/backend-1.0-RELEASE.jar
+[[1;34mINFO[m] Installing /var/lib/jenkins/workspace/Evaluation_pipeline/backend/pom.xml to /var/lib/jenkins/.m2/repository/adi/backend/1.0-RELEASE/backend-1.0-RELEASE.pom
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  2.711 s
+[[1;34mINFO[m] Finished at: 2025-04-19T05:03:53Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[Pipeline] sh
++ docker build -t arungc07/project-backend:latest .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 143B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/openjdk:8
+#2 ...
+
+#3 [auth] library/openjdk:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/openjdk:8
+#2 DONE 1.5s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/3] FROM docker.io/library/openjdk:8@sha256:86e863cc57215cfb181bd319736d0baf625fe8f150577f9eb58bd937f5452cb8
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 27.24MB 0.2s done
+#6 DONE 0.2s
+
+#7 [2/3] WORKDIR /app
+#7 CACHED
+
+#8 [3/3] COPY target/backend-1.0-RELEASE.jar /app/backend.jar
+#8 DONE 1.4s
+
+#9 exporting to image
+#9 exporting layers
+#9 exporting layers 0.8s done
+#9 writing image sha256:e336711b9e233ce061f671b3dc677ff19b76ec4dae7c8ce3253e059df97dfb94 done
+#9 naming to docker.io/arungc07/project-backend:latest 0.0s done
+#9 DONE 0.8s
+
+ [33m1 warning found (use docker --debug to expand):
+[0m - JSONArgsRecommended: JSON arguments recommended for CMD to prevent unintended behavior related to OS signals (line 4)
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Frontend)
+[Pipeline] dir
+Running in /var/lib/jenkins/workspace/Evaluation_pipeline/frontend
+[Pipeline] {
+[Pipeline] sh
++ mvn clean install
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------------------< [0;36madi:frontend[0;1m >----------------------------[m
+[[1;34mINFO[m] [1mBuilding frontend 1.0-RELEASE[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-clean-plugin:2.5:clean[m [1m(default-clean)[m @ [36mfrontend[0;1m ---[m
+[[1;34mINFO[m] Deleting /var/lib/jenkins/workspace/Evaluation_pipeline/frontend/target
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mfrontend[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:compile[m [1m(default-compile)[m @ [36mfrontend[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 16 source files to /var/lib/jenkins/workspace/Evaluation_pipeline/frontend/target/classes
+[[1;33mWARNING[m] /var/lib/jenkins/workspace/Evaluation_pipeline/frontend/src/main/java/com/demo/app/service/DocServiceImpl.java: /var/lib/jenkins/workspace/Evaluation_pipeline/frontend/src/main/java/com/demo/app/service/DocServiceImpl.java uses unchecked or unsafe operations.
+[[1;33mWARNING[m] /var/lib/jenkins/workspace/Evaluation_pipeline/frontend/src/main/java/com/demo/app/service/DocServiceImpl.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mfrontend[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /var/lib/jenkins/workspace/Evaluation_pipeline/frontend/src/test/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.1:testCompile[m [1m(default-testCompile)[m @ [36mfrontend[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.18.1:test[m [1m(default-test)[m @ [36mfrontend[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-jar-plugin:2.5:jar[m [1m(default-jar)[m @ [36mfrontend[0;1m ---[m
+[[1;34mINFO[m] Building jar: /var/lib/jenkins/workspace/Evaluation_pipeline/frontend/target/frontend-1.0-RELEASE.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot-maven-plugin:1.3.5.RELEASE:repackage[m [1m(default)[m @ [36mfrontend[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-install-plugin:2.5.2:install[m [1m(default-install)[m @ [36mfrontend[0;1m ---[m
+[[1;34mINFO[m] Installing /var/lib/jenkins/workspace/Evaluation_pipeline/frontend/target/frontend-1.0-RELEASE.jar to /var/lib/jenkins/.m2/repository/adi/frontend/1.0-RELEASE/frontend-1.0-RELEASE.jar
+[[1;34mINFO[m] Installing /var/lib/jenkins/workspace/Evaluation_pipeline/frontend/pom.xml to /var/lib/jenkins/.m2/repository/adi/frontend/1.0-RELEASE/frontend-1.0-RELEASE.pom
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  3.058 s
+[[1;34mINFO[m] Finished at: 2025-04-19T05:04:02Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[Pipeline] sh
++ docker build -t arungc07/project-frontend:latest .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 297B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/openjdk:8
+#2 DONE 0.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/5] FROM docker.io/library/openjdk:8@sha256:86e863cc57215cfb181bd319736d0baf625fe8f150577f9eb58bd937f5452cb8
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 32.07MB 0.3s done
+#5 DONE 0.3s
+
+#6 [3/5] RUN mkdir -p src/main/webapp/resources target
+#6 CACHED
+
+#7 [2/5] WORKDIR /app
+#7 CACHED
+
+#8 [4/5] COPY src/main/webapp/* /app/src/main/webapp/
+#8 CACHED
+
+#9 [5/5] COPY target/frontend-1.0-RELEASE.jar /app/target/frontend.jar
+#9 DONE 1.6s
+
+#10 exporting to image
+#10 exporting layers
+#10 exporting layers 0.8s done
+#10 writing image sha256:550acaadb2e9c3d4c3260dc6c1e1fa543bba001ddd3dd973835758f7b1cf3d12 done
+#10 naming to docker.io/arungc07/project-frontend:latest done
+#10 DONE 0.8s
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker Login and Push Images)
+[Pipeline] withCredentials
+Masking supported pattern matches of $DOCKER_PASS
+[Pipeline] {
+[Pipeline] sh
++ echo ****
++ docker login -u arungc07@gmail.com --password-stdin
+Login Succeeded
++ docker push arungc07/project-backend:latest
+The push refers to repository [docker.io/arungc07/project-backend]
+6d477be29ecd: Preparing
+ef72b20c09cd: Preparing
+6b5aaff44254: Preparing
+53a0b163e995: Preparing
+b626401ef603: Preparing
+9b55156abf26: Preparing
+293d5db30c9f: Preparing
+03127cdb479b: Preparing
+9c742cd6c7a5: Preparing
+9b55156abf26: Waiting
+03127cdb479b: Waiting
+9c742cd6c7a5: Waiting
+293d5db30c9f: Waiting
+53a0b163e995: Pushed
+ef72b20c09cd: Pushed
+b626401ef603: Pushed
+6d477be29ecd: Pushed
+293d5db30c9f: Pushed
+03127cdb479b: Pushed
+6b5aaff44254: Pushed
+9b55156abf26: Pushed
+9c742cd6c7a5: Pushed
+latest: digest: sha256:35a680463edb10eac1a867ffd25b124452fc0f54eb230ae22ccfb13962b48ba1 size: 2213
++ docker push arungc07/project-frontend:latest
+The push refers to repository [docker.io/arungc07/project-frontend]
+1bfdd1cee138: Preparing
+fd039eb5c811: Preparing
+acd087fec568: Preparing
+ef72b20c09cd: Preparing
+6b5aaff44254: Preparing
+53a0b163e995: Preparing
+b626401ef603: Preparing
+9b55156abf26: Preparing
+293d5db30c9f: Preparing
+03127cdb479b: Preparing
+9c742cd6c7a5: Preparing
+b626401ef603: Waiting
+9b55156abf26: Waiting
+293d5db30c9f: Waiting
+03127cdb479b: Waiting
+9c742cd6c7a5: Waiting
+53a0b163e995: Waiting
+ef72b20c09cd: Mounted from arungc07/project-backend
+6b5aaff44254: Mounted from arungc07/project-backend
+fd039eb5c811: Pushed
+acd087fec568: Pushed
+53a0b163e995: Mounted from arungc07/project-backend
+b626401ef603: Mounted from arungc07/project-backend
+9b55156abf26: Mounted from arungc07/project-backend
+293d5db30c9f: Mounted from arungc07/project-backend
+03127cdb479b: Mounted from arungc07/project-backend
+9c742cd6c7a5: Mounted from arungc07/project-backend
+1bfdd1cee138: Pushed
+latest: digest: sha256:2cb21245206b846b6c6b5622ec52ccf6f4b62bdd0585602e51f279a12c20ea4f size: 2628
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run Containers)
+[Pipeline] sh
++ docker stop backend
+Error response from daemon: No such container: backend
++ true
++ docker rm backend
+Error response from daemon: No such container: backend
++ true
+[Pipeline] sh
++ docker stop frontend
+Error response from daemon: No such container: frontend
++ true
++ docker rm frontend
+Error response from daemon: No such container: frontend
++ true
+[Pipeline] sh
++ docker run -d -p 8085:8080 --name backend arungc07/project-backend:latest
+103f921b8c4897f5665d2ef43220b8d0c721cd274b88e64ebe066726d050c4ee
+[Pipeline] sh
++ export BACKEND=http://135.235.156.235:8085
++ docker run -d -p 8084:8080 --name frontend arungc07/project-frontend:latest
+0bc2b25043c349d76f6a18767ae45033483cd2c1c45376d49f8d4979e5d73ab1
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+✅ Application deployed:
+[Pipeline] echo
+Frontend: http://135.235.156.235:8084
+[Pipeline] echo
+Backend Docs: http://135.235.156.235:8085/docs
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
